@@ -21,13 +21,35 @@ body{
         radial-gradient(1200px 800px at 20% -10%, #f6fff0 0%, transparent 60%),
         radial-gradient(1200px 800px at 80% 110%, #f4ffee 0%, transparent 60%),
         var(--bg);
-    display: grid;
-    place-items: center;
+    overflow-x: hidden;
+}
+
+#bg-swarm{
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.bg-smi{
+  position: absolute;
+  opacity: 0.12;            
+  will-change: transform;
+  filter: drop-shadow(0 12px 18px rgba(82,110,65,0.18));
+  transform: translate3d(var(--x,0), var(--y,0), 0) scale(var(--s,1));
+  animation: drift var(--dur, 24s) ease-in-out infinite alternate;
+  user-select: none;
+}
+@keyframes drift{
+  from { transform: translate3d(var(--x,0), var(--y,0), 0) scale(var(--s,1)) rotate(-2deg); }
+  to   { transform: translate3d(calc(var(--x,0) + var(--dx, 80px)), calc(var(--y,0) + var(--dy, 60px)), 0) scale(var(--s,1)) rotate(2deg); }
 }
 
 .container{
     position: relative;
+    z-index: 1;
     width: min(920px, 92vw);
+    margin: 0 auto;
     padding: 4rem 1.25rem 3rem;
     text-align: center;
 }
@@ -57,10 +79,6 @@ body{
     0% { opacity: 0; transform: translateY(18px) scale(.9); }
     60% { opacity: 1; transform: translateY(-4px) scale(1.04); }
     100% { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.smisky, .smiski{
-    position: absolute;
 }
 
 .smiksi{
