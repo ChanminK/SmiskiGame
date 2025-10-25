@@ -2,8 +2,6 @@
 
 A __Fanpage__ project!
 
-A small fanpage where you can play a couple of different games with smiskis involved!
+A small fanpage of smiski where you have to try and guess what the name of each smiski figure is!
 
-(demo vid below in case the site broke)
-
-assets/demovid.gif
+To play, try the github link in the top right!
