@@ -45,6 +45,8 @@ body{
   to   { transform: translate3d(calc(var(--x,0) + var(--dx, 80px)), calc(var(--y,0) + var(--dy, 60px)), 0) scale(var(--s,1)) rotate(2deg); }
 }
 
+.container{ position: relative; z-index: 1; }
+
 .container{
     position: relative;
     z-index: 1;
