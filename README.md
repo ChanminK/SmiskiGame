@@ -2,7 +2,7 @@
 
 A __Fanpage__ project!
 
-A small little game where you have to guess what smiski is which!
+A small fanpage where you can play a couple of different games with smiskis involved!
 
 (demo vid below in case the site broke)
 

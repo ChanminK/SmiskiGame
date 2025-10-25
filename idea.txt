@@ -1,10 +1,19 @@
 Get EVERY SINGLE SMISKY and do some sort of game with them
 
-Find an image for regualr smiskis from the offical smiski page
+Site:
 
-Find the image of the secret ones somehow
+Main page is a welcome page with letters appearing saying smiski
+Each time it loads it'll choose from two different smiskis in assets to display on its left and right
+below it will be three buttons leading to different pages
 
-Format:
+Button 1:
+
+Button 2:
+
+Button 3:
+
+
+WHY IS THIS NOT THE STANDARD MAN
 Series name
     number + name of smiski
     honestly maybe do a guessing game?
