@@ -14,7 +14,7 @@ const DUR   = { min: 18, max: 36 };
 
 const PACKS = [
   // HEXAGON SMISKIS 
-  { label: "Series 1: birthday", folder: "series1",   type: "hex", items: [
+  { label: "Series 1: birthday", folder: "birthday",   type: "hex", items: [
     "givingabouquet","wrappedup","poppingconfetti","birthdaymessage","littlesmiskidecorating","tasting"
   ]},
   { label: "Pack 2: sunday",     folder: "sunday",    type: "hex", items: [
@@ -42,10 +42,10 @@ const PACKS = [
   { label: "Pack 8: hippers", folder: "hippers", type: "circle", items: [
     "onhissmartphone","tryingtoclimb","lookingout","sticking","dozing","upsidedown"
   ]},
-  { label: "Pack 9: atwork", folder: "atwork", type: "circle", items: [
+  { label: "Pack 9: atwork", folder: "working", type: "circle", items: [
     "approving","researching","presenting","goodidea","ontherord","littlesmiskigroupthink"
   ]},
-  { label: "Pack 10: museum", folder: "museum", type: "circle", items: [
+  { label: "Pack 10: museum", folder: "muesum", type: "circle", items: [
     "thesource","fuzin&raijin","bacchus","velazquez","dali","pearlearring"
   ]},
   { label: "Pack 11: bed", folder: "bed", type: "circle", items: [
@@ -69,7 +69,7 @@ const PACKS = [
   { label: "Pack 17: series2", folder: "series2", type: "circle", items: [
     "kneeling","climbing","daydreaming","pushing","peeking","listening"
   ]},
-  { label: "Pack 18: series1", folder: "series1classic", type: "circle", items: [
+  { label: "Pack 18: series1", folder: "series1", type: "circle", items: [
     "huggingknees","sitting","lookingback","lounging","hiding","peeking"
   ]},
 ];
