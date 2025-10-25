@@ -20,11 +20,28 @@
 
         <h1 id="title" class="title" aria-label="smiski"></h1>
 
-        <nav class="nav">
-            <a class="pill" href="game-1.html">Mini Game 1</a>
-            <a class="pill" href="game-2.html">Mini Game 2</a>
-            <a class="pill" href="game-3.html">Mini Game 3</a>
-        </nav>
+        <section id="game" class="game-card" aria-live="polite">
+            <div class="hud">
+                <div>Score: <span id="score">0</span></div>
+                <div>Question: <span id="qnum">1</span></div>
+                <button id="reset" class="ghost-btn" aria-label="Restart game">Restart</button>
+            </div>
+
+            <div class="qwrap">
+                <img id="q-img" alt="Guess which Smiski this is" />
+            </div>
+
+            <div class="options" role="group" aria-label="Answer choices">
+                <button class="option" data-idx="0"></button>
+                <button class="option" data-idx="1"></button>
+                <button class="option" data-idx="2"></button>
+                <button class="option" data-idx="3"></button>
+            </div>
+
+            <div class="feedback" id="feedback" aria-live="polite"></div>
+
+            <button id="next" class="pill next-btn" disabled>Next</button>
+        </section>
     </main>
 
     <script src="script.js" defer></script>

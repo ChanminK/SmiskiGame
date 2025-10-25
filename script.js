@@ -112,7 +112,6 @@ function buildStaggeredTitle(el, text) {
   });
 }
 
-
 window.addEventListener("DOMContentLoaded", () => {
 
   buildStaggeredTitle(document.getElementById("title"), TITLE_TEXT);
@@ -180,3 +179,144 @@ window.addEventListener("DOMContentLoaded", () => {
     });
     }
 });
+
+function allEntries() {
+    const entries = [];
+    for (const p of PACKS) {
+        for (const name of p.items) {
+            const safe = name.replaceAll("&","%26").replaceAll(" ","");
+            entries.push({
+                label: name,
+                path: `assets/${p.folder}/${safe}.png`,
+                type: p.type,
+                pack: p.label
+            });
+        }
+    }
+    return entries;
+}
+
+function sampleN(arr, n, excludeIdx = -1) {
+    const idxs = arr.map((_,i)=>i).filter(i => i !== excludeIdx);
+    for (let i = idxs.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [idxs[i], idxs[j]] = [idxs[j], idxs[i]];
+    }
+    return idxs.slice(0, n).map(i => arr[i]);
+}
+
+function shuffle(arr){
+    for (let i = arr.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [arr[i],arr[j]] = [arr[j],arr[i]];
+    }
+    return arr;
+}
+
+const GAME = {
+    pool: allEntries(),
+    order: [],
+    ptr: 0,
+    score: 0,
+};
+
+(function setupOrder(){
+    GAME.order = GAME.pool.map((_,i)=>i);
+    shuffle(GAME.order);
+})();
+
+const imgEl = document.getElementById("q-img");
+const optionBtns = [...document.querySelectorAll(".option")];
+const nextBtn = document.getElementById("next");
+const scoreEl = document.getElementById("score");
+const qnumEl = document.getElementById("qnum");
+const feedbackEl = document.getElementById("feedback");
+const resetBtn = document.getElementById("reset");
+
+function makeQuestion() {
+  if (GAME.ptr >= GAME.order.length) {
+    shuffle(GAME.order);
+    GAME.ptr = 0;
+  }
+  const qIndex = GAME.order[GAME.ptr];
+  const correct = GAME.pool[qIndex];
+
+  const sameType = GAME.pool
+    .map((e, i) => ({ e, i }))
+    .filter(x => x.e.type === correct.type && x.i !== qIndex)
+    .map(x => x.e);
+
+  let distractors = sampleN(sameType, 3);
+  if (distractors.length < 3) {
+    const needed = 3 - distractors.length;
+    const others = GAME.pool.filter((e, i) => i !== qIndex && !distractors.includes(e));
+    distractors = distractors.concat(sampleN(others, needed));
+  }
+
+  const options = shuffle([correct, ...distractors].slice(0,4));
+
+  imgEl.src = correct.path;
+  imgEl.dataset.answer = correct.label;
+  optionBtns.forEach((btn, i) => {
+    btn.disabled = false;
+    btn.classList.remove("correct","wrong");
+    btn.textContent = options[i].label;
+    btn.dataset.correct = String(options[i].label === correct.label);
+  });
+  feedbackEl.textContent = "";
+  nextBtn.disabled = true;
+
+  qnumEl.textContent = (GAME.ptr + 1);
+}
+
+function onChoose(e){
+  const btn = e.currentTarget;
+  if (btn.disabled) return;
+
+  const isCorrect = btn.dataset.correct === "true";
+  optionBtns.forEach(b => b.disabled = true);
+
+  if (isCorrect) {
+    btn.classList.add("correct");
+    GAME.score += 1;
+    scoreEl.textContent = GAME.score;
+    feedbackEl.textContent = "Correct!";
+  } else {
+    btn.classList.add("wrong");
+
+    const correctBtn = optionBtns.find(b => b.dataset.correct === "true");
+    if (correctBtn) correctBtn.classList.add("correct");
+    const answerText = imgEl.dataset.answer;
+    feedbackEl.textContent = `Oops — it was “${answerText}”.`;
+  }
+
+  nextBtn.disabled = false;
+}
+
+function onNext(){
+  GAME.ptr += 1;
+  makeQuestion();
+}
+
+function onReset(){
+  GAME.score = 0;
+  scoreEl.textContent = "0";
+  shuffle(GAME.order);
+  GAME.ptr = 0;
+  makeQuestion();
+}
+
+optionBtns.forEach(b => b.addEventListener("click", onChoose));
+nextBtn.addEventListener("click", onNext);
+resetBtn.addEventListener("click", onReset);
+
+window.addEventListener("keydown", (e) => {
+  if (e.key >= "1" && e.key <= "4") {
+    const idx = Number(e.key) - 1;
+    if (!optionBtns[idx].disabled) optionBtns[idx].click();
+  } else if (e.key === "Enter" && !nextBtn.disabled) {
+    nextBtn.click();
+  }
+});
+
+makeQuestion();
